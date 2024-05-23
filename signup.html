@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="navigation.css">
+    <header>
+        <h1>LUCT Smart Campus Navigation System</h1>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="about.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="admin.html">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="signup.html">Join Now</a>
+                </li>
+                <li class="nav-link link text-black display-4">
+                    <a class="btn btn-primary display-4" href="navigate.html">Get Started</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+<style>
+    header {
+      text-align: center;
+      padding: 10px;
+      background-color:rgb(0, 0, 0);  
+      color: #ddd;
+    }
+    .form-container {
+      margin: 2rem auto;
+      width: 600px;
+      border: 1px solid #ddd;
+      padding: 2rem;
+      border-radius: 20px;
+      background-color: #f5f5f5;
+      box-shadow: 4px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    h2 {
+      text-align: center;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      font-family: 'Arial', sans-serif;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-family: 'Roboto', sans-serif;
+    }
+    button[type="submit"] {
+      background-color: #4CAF50; /* Green button color */
+      color: white;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .success-message,
+    .error-message {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+    .success-message {
+      color: green;
+    }
+    .error-message {
+      color: red;
+    }
+    .navbar-nav {
+      display: flex; /* Make navigation items display horizontally */
+      list-style: none; /* Remove default bullet points */
+      margin: 0; /* Remove default margin */
+      padding: 0; /* Remove default padding */
+    }
+    .navbar-nav li {
+      margin-right: 1rem; /* Add spacing between navigation items */
+    }
+    .navbar-nav .nav-link {
+      display: block; /* Allow full width for links */
+    }
+    .user-roles {  /* New style for the user roles container */
+      display: flex;  /* Make elements display horizontally */
+      margin: 0 -0.5rem;  /* Remove default radio button spacing */
+    }
+    .user-roles input[type="radio"] {  /* Style radio buttons */
+      margin: 0 0.5rem 0 0;  /* Add spacing between radio buttons */
+    }
+    .user-roles label {  /* Style radio button labels */
+      margin: 0 0.5rem;  /* Add spacing between labels */
+    }
+    footer {
+      background-color: black;
+      color: white;
+      text-align: center;
+      padding: 1rem 2rem; /* Add some padding for spacing */
+    }
+    footer p {
+      margin: 0; /* Remove default margin from paragraph */
+    }
+</style>
+</head>
+<body>
+<div class="form-container active" id="role-selection-container">
+    <h2>Select User Role</h2>
+    <form id="role-selection-form">
+      <div class="form-group">
+        <label>User Role:</label>
+        <br>
+        <input type="radio" id="role-visitor" name="user_role" value="visitor">
+        <label for="role-visitor">Visitor</label>
+        <br>
+        <input type="radio" id="role-student" name="user_role" value="student">
+        <label for="role-student">Student</label>
+        <br>
+        <input type="radio" id="role-lecturer" name="user_role" value="lecturer">
+        <label for="role-lecturer">Lecturer</label>
+        <br>
+        <input type="radio" id="role-staff" name="user_role" value="staff">
+        <label for="role-staff">Staff</label>
+      </div>
+      <div class="form-group">
+        <button type="button" id="select-role-button">Select Role</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="registration-form-container" style="display: none;">
+    <h2>Sign Up</h2>
+    <form id="signup-form" action="signup.php" method="POST">
+      <div class="form-group">
+        <label for="signup-username">Username</label>
+        <input type="text" id="signup-username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="signup-confirm-password">Confirm Password</label>
+        <input type="password" id="signup-confirm-password" name="confirm-password" required>
+        <span class="error-message" id="password-mismatch-error"></span>
+      </div>
+      <div class="form-group">
+        <button type="submit">Sign Up</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="login-form-container" style="display: none;">
+    <h2>Login</h2>
+    <form id="login-form" action="login.php" method="post">
+      <div class="form-group">
+        <label for="login-username">Username</label>
+        <input type="text" id="login-username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" name="password" required>
+      </div>
+      <div class="form-group">
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+  const selectRoleButton = document.getElementById("select-role-button");
+  const registrationFormContainer = document.getElementById("registration-form-container");
+  const roleSelectionContainer = document.getElementById("role-selection-container");
+  const loginFormContainer = document.getElementById("login-form-container");
+
+  selectRoleButton.addEventListener("click", function() {
+    roleSelectionContainer.classList.remove("active");
+    registrationFormContainer.style.display = "block";
+  });
+
+  const signupForm = document.getElementById("signup-form");
+  signupForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const username = document.getElementById('signup-username').value;
+    const password = document.getElementById('signup-password').value;
+    const confirmPassword = document.getElementById('signup-confirm-password').value;
+    const role = document.querySelector('input[name="user_role"]:checked').value;
+
+    if (password !== confirmPassword) {
+      document.getElementById('password-mismatch-error').textContent = 'Passwords do not match!';
+      document.getElementById('password-mismatch-error').style.display = 'block';
+      return;
+    }
+
+    fetch('signup.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `username=${username}&password=${password}&role=${role}`
+    })
+    .then(response => response.text())
+    .then(data => {
+      if (data === 'success') {
+        registrationFormContainer.style.display = "none";
+        loginFormContainer.style.display = "block";
+      } else {
+        document.getElementById('password-mismatch-error').textContent = 'Error signing up. Please try again.';
+        document.getElementById('password-mismatch-error').style.display = 'block';
+      }
+    })
+    .catch(error => {
+      document.getElementById('password-mismatch-error').textContent = 'An error occurred. Please try again.';
+      document.getElementById('password-mismatch-error').style.display = 'block';
+    });
+  });
+
+  const loginForm = document.getElementById("login-form");
+  loginForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
+
+    fetch('login.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `username=${username}&password=${password}`
+    })
+    .then(response => response.text())
+    .then(data => {
+      if (data === 'success') {
+        window.location.href = 'index.html';
+      } else {
+        document.getElementById('login-error-message').textContent = data;
+        document.getElementById('login-error-message').style.display = 'block';
+      }
+    })
+    .catch(error => {
+      document.getElementById('login-error-message').textContent = 'An error occurred. Please try again.';
+      document.getElementById('login-error-message').style.display = 'block';
+    });
+  });
+  </script>
+
+  <footer>
+    <p>&copy; 2024 LUCT Smart Campus Navigation System. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
